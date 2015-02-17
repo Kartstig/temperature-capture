@@ -23,10 +23,9 @@ class Communicator(object):
 
     def readData(self):
         self.requestData()
-        raw = self.ser.read(4)
+        raw = self.ser.readline().rstrip()
         if raw:
-            data = struct.unpack('!f', self.ser.read(4))
-            return data
+            return float(raw)
 
     def requestData(self):
         self.ser.write(self.requestPacket)

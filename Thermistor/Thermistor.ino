@@ -8,7 +8,7 @@
 // Constants
 const int sensorPin = A0;
 const int loadR = 1200;
-const int Vref = 5.0;
+const float Vref = 5.0;
 const byte _flag = 0x7E; // Request Flag
 
 // Steinhart-Hart Constants
@@ -18,7 +18,8 @@ const float C = 8.61058e-08; //Steinhart Const C
 
 // Calculation Variables
 volatile float R;
-volatile float Temp;
+float Temp;
+byte *_Temp = (byte *) &Temp;
 volatile float Vt;
 
 void setup() {
@@ -26,8 +27,8 @@ void setup() {
   pinMode(sensorPin, INPUT);
 }
 
-volatile byte *_Temp = (byte *) &Temp;
 void loop() {
+  getTemp();
   while(Serial.available()) {
     volatile byte buffer;
     buffer = Serial.read();
@@ -35,7 +36,7 @@ void loop() {
       Serial.write(_Temp, 4);
     }
   }
-  delay(100);
+  delay(10);
 }
 
 void getTemp() {
