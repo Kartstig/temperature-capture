@@ -24,8 +24,10 @@ class Communicator(object):
     def readData(self):
         self.requestData()
         raw = self.ser.readline().rstrip()
-        if raw:
-            return float(raw)
+        parsed = raw.split(",")
+        parsed.append(datetime.now())
+        if parsed:
+            return parsed
 
     def requestData(self):
         self.ser.write(self.requestPacket)
@@ -37,7 +39,7 @@ class Communicator(object):
             try:
                 with open(filename, "a") as csv_file:
                     w = csv.writer(csv_file, dialect="excel")
-                    w.writerow([datetime.now(), self.readData()])
+                    w.writerow(self.readData())
             except csv.Error, e:
                 print "Error writing CSV: {}".format(e)
             time.sleep(rate)

@@ -41,7 +41,7 @@ def main():
     delta = int(raw_input("Length of time to record[min]: "))
     rate = int(raw_input("Input sample rate[s]: "))
     
-    com.capture(delta=delta, rate=rate, filename="{}.csv".format(datetime.now().strftime("%Y-%m-%d-%H:%M")))
+    com.capture(delta=delta, rate=rate, filename="{}.csv".format(datetime.now().strftime("%Y%m%d%H%M")))
 
 if __name__ == '__main__':
     main()
